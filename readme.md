@@ -1,5 +1,5 @@
 #Gruppuppgift1 -5b
 
 
-gitrepo
-github.com/JonathanAstrom/TicTacToe.git
+gitrepo:
+https://github.com/JonathanAstrom/TicTacToe.git
