@@ -5,29 +5,59 @@ import java.util.Scanner;
 
 public class Jonte {
 
+	
 	public static void main(String[] args) {
 
-		char[][] gameBoard = { { '_', '|', '_', '|', '_' }, { '_', '|', '_', '|', '_' }, { ' ', '|', ' ', '|', ' ' }, };// spelplanens uppbyggnad
-																														 
-		printGameboard(gameBoard);
+		
+		System.out.println("Välj 1-2\n1. Singleplayer\n2. Multiplayer");
+		Scanner scan = new Scanner(System.in);
+		int mode = scan.nextInt();
+		
+		char[][] gameBoard = { { '_', '|', '_', '|', '_' }, { '_', '|', '_', '|', '_' }, { ' ', '|', ' ', '|', ' ' }, };// Spelplanens uppbyggnad
+		switch(mode) {		
+		case 1: //Singleplayer
+			printGameboard(gameBoard);
 
+			while(true) {	
+			Scanner sc = new Scanner(System.in);
+			System.out.println("Placera spelbricka (1-9)");
+			int playerPos = sc.nextInt();//Spelare 1 val
+					
+			placeToken(gameBoard, playerPos, "player");
 		
-		while(true) {	
-		Scanner sc = new Scanner(System.in);
-		System.out.println("Placera spelbricka (1-9)");
-		int playerPos = sc.nextInt();//spelare 1 val
-				
-		placeToken(gameBoard, playerPos, "player");
-		printGameboard(gameBoard);//skriver ut spelplan
-		System.out.println("Placera spelbricka (1-9)");
-		int playerTwoPos = sc.nextInt();//spelare 2 val
+			Random rnd = new Random();
+			int cpuPos = rnd.nextInt(9) + 1;//Random val
+			
+			placeToken(gameBoard, cpuPos, "comp");//
+			printGameboard(gameBoard);//Skriver ut spelplan
+			
+			}
+			
+			
+		case 2: //Multiplayer
+			printGameboard(gameBoard);
+			
+			while(true) {	
+			Scanner sc = new Scanner(System.in);
+			System.out.println("Placera spelbricka (1-9)");
+			int playerPos = sc.nextInt();//Spelare 1 val
+					
+			placeToken(gameBoard, playerPos, "player");
+			printGameboard(gameBoard);//Skriver ut spelplan
+			System.out.println("Placera spelbricka (1-9)");
+			int playerTwoPos = sc.nextInt();//spelare 2 val
+			
+			placeToken(gameBoard, playerTwoPos, "playerTwo");//
+			printGameboard(gameBoard);//Skriver ut spelplan
+			
+			}
 		
-		placeToken(gameBoard, playerTwoPos, "playerTwo");//
-		printGameboard(gameBoard);//skriver ut spelplan
 		
 		}
+		
+
 	}
-	public static void printGameboard(char[][] gameBoard) { //metod för spelplan
+	public static void printGameboard(char[][] gameBoard) { //Metod för spelplan
 		for (char[] row : gameBoard) {
 			for (char i : row) {
 				System.out.print(i);
@@ -36,7 +66,7 @@ public class Jonte {
 		}
 	}
 
-	public static void placeToken(char[][] gameBoard, int input, String user) { //metod för att placera x eller o
+	public static void placeToken(char[][] gameBoard, int input, String user) { //Metod för att placera x eller o
 
 		char token = ' ';
 
@@ -44,6 +74,8 @@ public class Jonte {
 			token = 'x';			
 		} else if (user.equals("playerTwo")) {
 			token = 'o';			
+		} else if (user.equals("comp")) {
+			token = 'o';
 		}
 
 		switch (input) {
