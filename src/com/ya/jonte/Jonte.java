@@ -15,15 +15,16 @@ public class Jonte {
 		while(true) {	
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Placera spelbricka (1-9)");
-		int playerPos = sc.nextInt();	
+		int playerPos = sc.nextInt();//spelare 1 val
 				
 		placeToken(gameBoard, playerPos, "player");
+		printGameboard(gameBoard);//skriver ut spelplan
+		System.out.println("Placera spelbricka (1-9)");
+		int playerTwoPos = sc.nextInt();//spelare 2 val
 		
-		Random rnd = new Random();//datorns val
-		int compPos = rnd.nextInt(9)+1;
-		placeToken(gameBoard, compPos, "comp");//
+		placeToken(gameBoard, playerTwoPos, "playerTwo");//
+		printGameboard(gameBoard);//skriver ut spelplan
 		
-		printGameboard(gameBoard);//spelplan där man ser spelmarkörer
 		}
 	}
 	public static void printGameboard(char[][] gameBoard) { //metod för spelplan
@@ -41,7 +42,7 @@ public class Jonte {
 
 		if (user.equals("player")) {
 			token = 'x';			
-		} else if (user.equals("comp")) {
+		} else if (user.equals("playerTwo")) {
 			token = 'o';			
 		}
 
@@ -86,6 +87,5 @@ public class Jonte {
  * 
  * göra så man inte kan skriva över andra spelarens markör,
  * göra så man inte kan lägga markören på redan lagt ställe
- * kolla vinnare eller om det blir lika
- * eventuellt göra datorn smartare*/
+ * kolla vinnare eller om det blir lika*/
 
