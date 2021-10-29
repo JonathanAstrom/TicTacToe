@@ -44,7 +44,7 @@ public class Filip {
 			}
 			makeMove(gameBoard, playerTwoMove, "Player2");
 
-			// Kod för datorspelare
+//			 Kod för datorspelare
 //			Random rand = new Random();
 //			int computerMove = rand.nextInt(9) + 1;
 //			while (playerOnePositions.contains(computerMove) || computerPositions.contains(computerMove)) {
