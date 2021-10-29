@@ -68,12 +68,18 @@ public class Game {
 				Scanner sc = new Scanner(System.in);
 				System.out.println("Placera spelbricka (1-9)");
 				int playerPos = sc.nextInt();// Spelare 1 val
-
+				while (playerOnePositions.contains(playerPos) || playerTwoPositions.contains(playerPos)) {
+					System.out.print("You can't make a move on another players piece. \nTry again (1-9): ");
+					playerPos = sc.nextInt();
+				}
 				makeMove(gameBoard, playerPos, "Player1");
 				printGameBoard(gameBoard);
 				System.out.println("Placera spelbricka (1-9)");
 				int playerTwoPos = sc.nextInt();// spelare 2 val
-
+				while (playerOnePositions.contains(playerTwoPos) || playerTwoPositions.contains(playerTwoPos)) {
+					System.out.print("You can't make a move on another players piece. \nTry again (1-9): ");
+					playerTwoPos = sc.nextInt();
+				}
 				makeMove(gameBoard, playerTwoPos, "Player2");
 				printGameBoard(gameBoard);
 
