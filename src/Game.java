@@ -12,26 +12,21 @@ public class Game {
 
 	public static void main(String[] args) {
 
-		
 		String[][] gameBoard = { { "     ", "|", "     ", "|", "     " }, { "-----", "+", "-----", "+", "-----" },
 				{ "     ", "|", "     ", "|", "     " }, { "-----", "+", "-----", "+", "-----" },
 				{ "     ", "|", "     ", "|", "     " } };
 
 		System.out.println("Välj spelarläge(1-2): \n\n1. Spela mot dator \n2. Spela mot varandra");
 		Scanner scan = new Scanner(System.in);
-		int mode = scan.nextInt();
+		int menuChoice = scan.nextInt();
 		boolean gameOn = true;
-		switch (mode) {
+		switch (menuChoice) {
 		case 1: // Singleplayer
 			printGameBoard(gameBoard);
 
-			while (gameOn) {
+			while (true) {
 				Scanner sc = new Scanner(System.in);
 				String result = checkWinner();
-				if (result.length() > 0) {
-					System.out.println(result);
-					break;
-				}
 				System.out.print("Placera spelbricka (1-9): ");
 				int playerPos = sc.nextInt();// Spelare 1 val
 				while (playerOnePositions.contains(playerPos) || playerTwoPositions.contains(playerPos)) {
@@ -41,27 +36,37 @@ public class Game {
 
 				makeMove(gameBoard, playerPos, "Player1");
 				printGameBoard(gameBoard);
+				if (result.length() > 0) {
+					System.out.println(result);
+					break;
+				}
 
 				Random rnd = new Random();
 				int cpuPos = rnd.nextInt(9) + 1;// Random val
 				while (playerOnePositions.contains(cpuPos) || computerPositions.contains(cpuPos)) {
 					cpuPos = rnd.nextInt(9) + 1;
-					}
-					try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					makeMove(gameBoard, cpuPos, "Computer");
-					printGameBoard(gameBoard);
+				}
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				makeMove(gameBoard, cpuPos, "Computer");
+				printGameBoard(gameBoard);
+				if (result.length() > 0) {
+					System.out.println(result);
+					break;
+				}
 
 			}
+			break;
 
 		case 2: // Multiplayer
 			printGameBoard(gameBoard);
 
-			while (gameOn) {
+			while (true) {
+				String result = checkWinner();
 				Scanner sc = new Scanner(System.in);
 				System.out.print("Spelare 1, placera spelbricka (1-9): ");
 				int playerPos = sc.nextInt();// Spelare 1 val
@@ -71,6 +76,10 @@ public class Game {
 				}
 				makeMove(gameBoard, playerPos, "Player1");
 				printGameBoard(gameBoard);
+				if (result.length() > 0) {
+					System.out.println(result);
+					break;
+				}
 				System.out.print("Spelare 2, placera spelbricka (1-9): ");
 				int playerTwoPos = sc.nextInt();// spelare 2 val
 				while (playerOnePositions.contains(playerTwoPos) || playerTwoPositions.contains(playerTwoPos)) {
@@ -79,11 +88,9 @@ public class Game {
 				}
 				makeMove(gameBoard, playerTwoPos, "Player2");
 				printGameBoard(gameBoard);
-
-				String result = checkWinner();
 				if (result.length() > 0) {
 					System.out.println(result);
-					gameOn = false;
+					break;
 				}
 
 			}
