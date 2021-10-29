@@ -17,7 +17,7 @@ public class Game {
 				{ "     ", "|", "     ", "|", "     " }, { "-----", "+", "-----", "+", "-----" },
 				{ "     ", "|", "     ", "|", "     " } };
 
-		System.out.println("Välj 1-2\n1. Singleplayer\n2. Multiplayer");
+		System.out.println("Välj spelarläge(1-2): \n1. Spela mot dator \n2. Spela mot varandra");
 		Scanner scan = new Scanner(System.in);
 		int mode = scan.nextInt();
 		boolean gameOn = true;
@@ -27,10 +27,10 @@ public class Game {
 
 			while (gameOn) {
 				Scanner sc = new Scanner(System.in);
-				System.out.println("Placera spelbricka (1-9)");
+				System.out.print("Placera spelbricka (1-9): ");
 				int playerPos = sc.nextInt();// Spelare 1 val
 				while (playerOnePositions.contains(playerPos) || playerTwoPositions.contains(playerPos)) {
-					System.out.print("You can't make a move on another players piece. \nTry again (1-9): ");
+					System.out.print("Du kan inte lägga på en annan spelares position. \nFörsök igen (1-9): ");
 					playerPos = sc.nextInt();
 				}
 
@@ -40,7 +40,6 @@ public class Game {
 				Random rnd = new Random();
 				int cpuPos = rnd.nextInt(9) + 1;// Random val
 				while (playerOnePositions.contains(cpuPos) || computerPositions.contains(cpuPos)) {
-					System.out.print("You can't make a move on another players piece. \nTry again (1-9): ");
 					cpuPos = rnd.nextInt(9) + 1;
 					}
 					try {
@@ -66,18 +65,18 @@ public class Game {
 
 			while (gameOn) {
 				Scanner sc = new Scanner(System.in);
-				System.out.println("Placera spelbricka (1-9)");
+				System.out.print("Placera spelbricka (1-9): ");
 				int playerPos = sc.nextInt();// Spelare 1 val
 				while (playerOnePositions.contains(playerPos) || playerTwoPositions.contains(playerPos)) {
-					System.out.print("You can't make a move on another players piece. \nTry again (1-9): ");
+					System.out.print("Du kan inte lägga på en annan spelares position. \nFörsök igen (1-9): ");
 					playerPos = sc.nextInt();
 				}
 				makeMove(gameBoard, playerPos, "Player1");
 				printGameBoard(gameBoard);
-				System.out.println("Placera spelbricka (1-9)");
+				System.out.print("Placera spelbricka (1-9): ");
 				int playerTwoPos = sc.nextInt();// spelare 2 val
 				while (playerOnePositions.contains(playerTwoPos) || playerTwoPositions.contains(playerTwoPos)) {
-					System.out.print("You can't make a move on another players piece. \nTry again (1-9): ");
+					System.out.print("Du kan inte lägga på en annan spelares position. \nFörsök igen (1-9): ");
 					playerTwoPos = sc.nextInt();
 				}
 				makeMove(gameBoard, playerTwoPos, "Player2");
@@ -178,14 +177,14 @@ public class Game {
 
 		for (List list : winningConditions) {
 			if (playerOnePositions.containsAll(list)) {
-				return "Player 1 has won. Congratulations!";
+				return "Spelare 1 har vunnit. Grattis!";
 			} else if (playerTwoPositions.containsAll(list)) {
-				return "Player 2 has won. Congratulations!";
+				return "Spelare 2 har vunnit. Grattis!";
 			} else if (computerPositions.containsAll(list)) {
-				return "Computer has won. Good luck next time!";
+				return "Datorn har vunnit. Lycka till nästa gång!";
 			} else if (playerOnePositions.size() + playerTwoPositions.size() == 9
 					|| playerOnePositions.size() + computerPositions.size() == 9) {
-				return "No winner. Try again!";
+				return "Oavgjort! Försök igen: ";
 			}
 		}
 		return "";

@@ -13,8 +13,6 @@ public class Filip {
 	static ArrayList<Integer> computerPositions = new ArrayList<Integer>();
 
 	public static void main(String[] args) {
-//		char[][] gameBoard = { { ' ', '|', ' ', '|', ' ' }, { '-', '+', '-', '+', '-' }, { ' ', '|', ' ', '|', ' ' },
-//				{ '-', '+', '-', '+', '-' }, { ' ', '|', ' ', '|', ' ' } };
 
 		String[][] gameBoard = { { "     ", "|", "     ", "|", "     " }, { "-----", "+", "-----", "+", "-----" },
 				{ "     ", "|", "     ", "|", "     " }, { "-----", "+", "-----", "+", "-----" },
@@ -26,7 +24,7 @@ public class Filip {
 			System.out.print("Player 1, enter your move (1-9): ");
 			int playerOneMove = input.nextInt();
 			while (playerOnePositions.contains(playerOneMove) || playerTwoPositions.contains(playerOneMove)) {
-				System.out.print("You can't make a move on another players piece. \nTry again (1-9): ");
+				System.out.print("Du kan inte lägga på en annan spelares position. \nFörsök igen (1-9): ");
 				playerOneMove = input.nextInt();
 			}
 			makeMove(gameBoard, playerOneMove, "Player1");
