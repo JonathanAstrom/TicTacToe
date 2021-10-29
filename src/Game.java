@@ -40,7 +40,6 @@ public class Game {
 					break;
 				}
 				printGameBoard(gameBoard);
-				
 
 				Random rnd = new Random();
 				int cpuPos = rnd.nextInt(9) + 1;// Random val
@@ -70,7 +69,7 @@ public class Game {
 
 			while (true) {
 				String result = checkWinner();
-				Scanner sc = new Scanner(System.in);				
+				Scanner sc = new Scanner(System.in);
 				System.out.print("Spelare 1, placera spelbricka (1-9): ");
 				int playerPos = sc.nextInt();// Spelare 1 val
 				while (playerOnePositions.contains(playerPos) || playerTwoPositions.contains(playerPos)) {
@@ -79,13 +78,13 @@ public class Game {
 				}
 				makeMove(gameBoard, playerPos, "Player1");
 				result = checkWinner();
-				if (result.length() > 0) {					
+				if (result.length() > 0) {
 					printGameBoard(gameBoard);
 					System.out.println(result);
 					break;
 				}
 				printGameBoard(gameBoard);
-	
+
 				System.out.print("Spelare 2, placera spelbricka (1-9): ");
 				int playerTwoPos = sc.nextInt();// spelare 2 val
 				while (playerOnePositions.contains(playerTwoPos) || playerTwoPositions.contains(playerTwoPos)) {
@@ -195,11 +194,13 @@ public class Game {
 				return "Spelare 2 har vunnit. Grattis!";
 			} else if (computerPositions.containsAll(list)) {
 				return "Datorn har vunnit. Lycka till nästa gång!";
-			} else if (playerOnePositions.size() + playerTwoPositions.size() == 9
-					|| playerOnePositions.size() + computerPositions.size() == 9) {
-				return "Oavgjort! Försök igen: ";
 			}
 		}
+		if (playerOnePositions.size() + playerTwoPositions.size() == 9
+				|| playerOnePositions.size() + computerPositions.size() == 9) {
+			return "Oavgjort! Försök igen: ";
+		}
+
 		return "";
 	}
 }
