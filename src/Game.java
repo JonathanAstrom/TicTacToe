@@ -17,7 +17,7 @@ public class Game {
 				{ "     ", "|", "     ", "|", "     " }, { "-----", "+", "-----", "+", "-----" },
 				{ "     ", "|", "     ", "|", "     " } };
 
-		System.out.println("Välj spelarläge(1-2): \n1. Spela mot dator \n2. Spela mot varandra");
+		System.out.println("Välj spelarläge(1-2): \n\n1. Spela mot dator \n2. Spela mot varandra");
 		Scanner scan = new Scanner(System.in);
 		int mode = scan.nextInt();
 		boolean gameOn = true;
@@ -27,6 +27,11 @@ public class Game {
 
 			while (gameOn) {
 				Scanner sc = new Scanner(System.in);
+				String result = checkWinner();
+				if (result.length() > 0) {
+					System.out.println(result);
+					break;
+				}
 				System.out.print("Placera spelbricka (1-9): ");
 				int playerPos = sc.nextInt();// Spelare 1 val
 				while (playerOnePositions.contains(playerPos) || playerTwoPositions.contains(playerPos)) {
@@ -51,13 +56,6 @@ public class Game {
 					makeMove(gameBoard, cpuPos, "Computer");
 					printGameBoard(gameBoard);
 
-					String result = checkWinner();
-					if (result.length() > 0) {
-						System.out.println(result);
-						gameOn = false;
-					}
-
-				
 			}
 
 		case 2: // Multiplayer
@@ -65,7 +63,7 @@ public class Game {
 
 			while (gameOn) {
 				Scanner sc = new Scanner(System.in);
-				System.out.print("Placera spelbricka (1-9): ");
+				System.out.print("Spelare 1, placera spelbricka (1-9): ");
 				int playerPos = sc.nextInt();// Spelare 1 val
 				while (playerOnePositions.contains(playerPos) || playerTwoPositions.contains(playerPos)) {
 					System.out.print("Du kan inte lägga på en annan spelares position. \nFörsök igen (1-9): ");
@@ -73,7 +71,7 @@ public class Game {
 				}
 				makeMove(gameBoard, playerPos, "Player1");
 				printGameBoard(gameBoard);
-				System.out.print("Placera spelbricka (1-9): ");
+				System.out.print("Spelare 2, placera spelbricka (1-9): ");
 				int playerTwoPos = sc.nextInt();// spelare 2 val
 				while (playerOnePositions.contains(playerTwoPos) || playerTwoPositions.contains(playerTwoPos)) {
 					System.out.print("Du kan inte lägga på en annan spelares position. \nFörsök igen (1-9): ");
