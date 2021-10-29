@@ -42,6 +42,7 @@ public class Game {
 				while (playerOnePositions.contains(cpuPos) || computerPositions.contains(cpuPos)) {
 					System.out.print("You can't make a move on another players piece. \nTry again (1-9): ");
 					cpuPos = rnd.nextInt(9) + 1;
+					}
 					try {
 						Thread.sleep(1000);
 					} catch (InterruptedException e) {
@@ -57,7 +58,7 @@ public class Game {
 						gameOn = false;
 					}
 
-				}
+				
 			}
 
 		case 2: // Multiplayer
