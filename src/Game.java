@@ -24,16 +24,16 @@ public class Game {
 			printGameBoard(gameBoard);
 
 			while (true) {
+				String result = checkWinner();
 				Scanner sc = new Scanner(System.in);
 				System.out.print("Placera spelbricka (1-9): ");
 				int playerPos = sc.nextInt();// Spelare 1 val
-				while (playerOnePositions.contains(playerPos) || playerTwoPositions.contains(playerPos)) {
+				while (playerOnePositions.contains(playerPos) || computerPositions.contains(playerPos)) {
 					System.out.print("Du kan inte lägga på en annan spelares position. \nFörsök igen (1-9): ");
 					playerPos = sc.nextInt();
 				}
-
 				makeMove(gameBoard, playerPos, "Player1");
-				String result = checkWinner();
+				result = checkWinner();
 				if (result.length() > 0) {
 					printGameBoard(gameBoard);
 					System.out.println(result);
@@ -54,6 +54,7 @@ public class Game {
 					e.printStackTrace();
 				}
 				makeMove(gameBoard, cpuPos, "Computer");
+				result = checkWinner();
 				if (result.length() > 0) {
 					printGameBoard(gameBoard);
 					System.out.println(result);
@@ -68,8 +69,8 @@ public class Game {
 			printGameBoard(gameBoard);
 
 			while (true) {
-				Scanner sc = new Scanner(System.in);
 				String result = checkWinner();
+				Scanner sc = new Scanner(System.in);				
 				System.out.print("Spelare 1, placera spelbricka (1-9): ");
 				int playerPos = sc.nextInt();// Spelare 1 val
 				while (playerOnePositions.contains(playerPos) || playerTwoPositions.contains(playerPos)) {
@@ -77,7 +78,8 @@ public class Game {
 					playerPos = sc.nextInt();
 				}
 				makeMove(gameBoard, playerPos, "Player1");
-				if (result.length() > 0) {
+				result = checkWinner();
+				if (result.length() > 0) {					
 					printGameBoard(gameBoard);
 					System.out.println(result);
 					break;
@@ -91,6 +93,7 @@ public class Game {
 					playerTwoPos = sc.nextInt();
 				}
 				makeMove(gameBoard, playerTwoPos, "Player2");
+				result = checkWinner();
 				if (result.length() > 0) {
 					printGameBoard(gameBoard);
 					System.out.println(result);
