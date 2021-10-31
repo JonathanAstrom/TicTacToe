@@ -19,6 +19,7 @@ public class Filip {
 				{ "     ", "|", "     ", "|", "     " } };
 		printGameBoard(gameBoard);
 
+		//hej hej
 		while (true) {
 			Scanner input = new Scanner(System.in);
 			System.out.print("Player 1, enter your move (1-9): ");

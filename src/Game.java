@@ -202,16 +202,16 @@ public class Game {
 
 		for (List list : winningConditions) {
 			if (playerOnePositions.containsAll(list)) {
-				return "Spelare 1 har vunnit. Grattis!";
+				return "Spelare 1 har vunnit. Grattis! \n";
 			} else if (playerTwoPositions.containsAll(list)) {
-				return "Spelare 2 har vunnit. Grattis!";
+				return "Spelare 2 har vunnit. Grattis! \n";
 			} else if (computerPositions.containsAll(list)) {
-				return "Datorn har vunnit. Lycka till nästa gång!";
+				return "Datorn har vunnit. Lycka till nästa gång! \n";
 			}
 		}
 		if (playerOnePositions.size() + playerTwoPositions.size() == 9
 				|| playerOnePositions.size() + computerPositions.size() == 9) {
-			return "Oavgjort! Försök igen: ";
+			return "Oavgjort! \n";
 		}
 
 		return "";
