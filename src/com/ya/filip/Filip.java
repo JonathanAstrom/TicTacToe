@@ -11,89 +11,14 @@ public class Filip {
 	static ArrayList<Integer> playerOnePositions = new ArrayList<Integer>();
 	static ArrayList<Integer> playerTwoPositions = new ArrayList<Integer>();
 	static ArrayList<Integer> computerPositions = new ArrayList<Integer>();
+	static String[][] gameBoard = { { "     ", "|", "     ", "|", "     " }, { "-----", "+", "-----", "+", "-----" },
+			{ "     ", "|", "     ", "|", "     " }, { "-----", "+", "-----", "+", "-----" },
+			{ "     ", "|", "     ", "|", "     " } };
 
 	public static void main(String[] args) {
-
-		String[][] gameBoard = { { "     ", "|", "     ", "|", "     " }, { "-----", "+", "-----", "+", "-----" },
-				{ "     ", "|", "     ", "|", "     " }, { "-----", "+", "-----", "+", "-----" },
-				{ "     ", "|", "     ", "|", "     " } };
-		printGameBoard(gameBoard);
-
-		//hej hej
-		while (true) {
-			Scanner input = new Scanner(System.in);
-			System.out.print("Player 1, enter your move (1-9): ");
-			int playerOneMove = input.nextInt();
-			while (playerOnePositions.contains(playerOneMove) || playerTwoPositions.contains(playerOneMove)) {
-				System.out.print("Du kan inte lägga på en annan spelares position. \nFörsök igen (1-9): ");
-				playerOneMove = input.nextInt();
-			}
-			makeMove(gameBoard, playerOneMove, "Player1");
-
-			printGameBoard(gameBoard);
-
-			String result = checkWinner();
-			System.out.println(result);
-
-			System.out.print("Player 2, enter your move (1-9): ");
-			int playerTwoMove = input.nextInt();
-			while (playerOnePositions.contains(playerTwoMove) || playerTwoPositions.contains(playerTwoMove)) {
-				System.out.print("You can't make a move on another players piece. \nTry again (1-9): ");
-				playerOneMove = input.nextInt();
-			}
-			makeMove(gameBoard, playerTwoMove, "Player2");
-
-//			 Kod för datorspelare
-//			Random rand = new Random();
-//			int computerMove = rand.nextInt(9) + 1;
-//			while (playerOnePositions.contains(computerMove) || computerPositions.contains(computerMove)) {
-//				System.out.print("You can't make a move on another players piece. \nTry again (1-9): ");
-//				playerOneMove = input.nextInt();
-//			}
-//			makeMove(gameBoard, computerMove, "Computer");
-
-			printGameBoard(gameBoard);
-
-			result = checkWinner();
-			System.out.println(result);
-		}
-
-	}
-
-	public static String checkWinner() {
-
-		List topRow = Arrays.asList(1, 2, 3);
-		List middleRow = Arrays.asList(4, 5, 6);
-		List bottomRow = Arrays.asList(7, 8, 9);
-		List leftColumn = Arrays.asList(1, 4, 7);
-		List middleColumn = Arrays.asList(2, 5, 8);
-		List rightColumn = Arrays.asList(3, 6, 9);
-		List diagonal1 = Arrays.asList(1, 5, 9);
-		List diagonal2 = Arrays.asList(7, 5, 3);
-
-		List<List> winningConditions = new ArrayList<List>();
-		winningConditions.add(topRow);
-		winningConditions.add(middleRow);
-		winningConditions.add(bottomRow);
-		winningConditions.add(leftColumn);
-		winningConditions.add(middleColumn);
-		winningConditions.add(rightColumn);
-		winningConditions.add(diagonal1);
-		winningConditions.add(diagonal2);
-
-		for (List list : winningConditions) {
-			if (playerOnePositions.containsAll(list)) {
-				return "Player 1 has won. Congratulations!";
-			} else if (playerTwoPositions.containsAll(list)) {
-				return "Player 2 has won. Congratulations!";
-			} else if (computerPositions.containsAll(list)) {
-				return "Computer has won. Good luck next time!";
-			} else if (playerOnePositions.size() + playerTwoPositions.size() == 9
-					|| playerOnePositions.size() + computerPositions.size() == 9) {
-				return "No winner. Try again!";
-			}
-		}
-		return "";
+		
+		runGame();
+		
 	}
 
 	public static void printGameBoard(String[][] gameBoard) {
@@ -105,6 +30,108 @@ public class Filip {
 			System.out.println();
 		}
 		System.out.println();
+	}
+
+	public static void runGame() {
+		int menuChoice;
+		do {
+			System.out.println("Välj spelarläge(1-2): ");
+			System.out.println("1. Spela mot dator \n2. Spela mot varandra \n3. Avsluta spelet");
+			Scanner scan = new Scanner(System.in);
+			menuChoice = scan.nextInt();
+			switch (menuChoice) {
+			case 1: 
+				singlePlayer();
+				break;
+
+			case 2: 
+				multiPlayer();
+				break;
+			case 3:
+				System.out.println("Spelet avslutas. . .");
+				break;
+			default:
+				System.out.println("Ogiltigt alternativ");
+				break;
+			}
+		} while (menuChoice != 3);
+	}
+
+	public static void singlePlayer() {
+		printGameBoard(gameBoard);
+		while (true) {
+			String result = checkWinner();
+			Scanner sc = new Scanner(System.in);
+			System.out.print("Placera spelbricka (1-9): ");
+			int playerPos = sc.nextInt();// Spelare 1 val
+			while (playerOnePositions.contains(playerPos) || computerPositions.contains(playerPos)) {
+				System.out.print("Du kan inte lägga på en annan spelares position. \nFörsök igen (1-9): ");
+				playerPos = sc.nextInt();
+			}
+			makeMove(gameBoard, playerPos, "Player1");
+			result = checkWinner();
+			if (result.length() > 0) {
+				printGameBoard(gameBoard);
+				System.out.println(result);
+				break;
+			}
+			printGameBoard(gameBoard);
+
+			Random rnd = new Random();
+			int cpuPos = rnd.nextInt(9) + 1;// Random val
+			while (playerOnePositions.contains(cpuPos) || computerPositions.contains(cpuPos)) {
+				cpuPos = rnd.nextInt(9) + 1;
+			}
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			makeMove(gameBoard, cpuPos, "Computer");
+			result = checkWinner();
+			if (result.length() > 0) {
+				printGameBoard(gameBoard);
+				System.out.println(result);
+				break;
+			}
+			printGameBoard(gameBoard);
+		}
+	}
+
+	public static void multiPlayer() {
+		printGameBoard(gameBoard);
+		while (true) {
+			String result = checkWinner();
+			Scanner sc = new Scanner(System.in);
+			System.out.print("Spelare 1, placera spelbricka (1-9): ");
+			int playerPos = sc.nextInt();// Spelare 1 val
+			while (playerOnePositions.contains(playerPos) || playerTwoPositions.contains(playerPos)) {
+				System.out.print("Du kan inte lägga på en annan spelares position. \nFörsök igen (1-9): ");
+				playerPos = sc.nextInt();
+			}
+			makeMove(gameBoard, playerPos, "Player1");
+			result = checkWinner();
+			if (result.length() > 0) {
+				printGameBoard(gameBoard);
+				System.out.println(result);
+				break;
+			}
+			printGameBoard(gameBoard);
+			System.out.print("Spelare 2, placera spelbricka (1-9): ");
+			int playerTwoPos = sc.nextInt();// spelare 2 val
+			while (playerOnePositions.contains(playerTwoPos) || playerTwoPositions.contains(playerTwoPos)) {
+				System.out.print("Du kan inte lägga på en annan spelares position. \nFörsök igen (1-9): ");
+				playerTwoPos = sc.nextInt();
+			}
+			makeMove(gameBoard, playerTwoPos, "Player2");
+			result = checkWinner();
+			if (result.length() > 0) {
+				printGameBoard(gameBoard);
+				System.out.println(result);
+				break;
+			}
+			printGameBoard(gameBoard);
+		}
 	}
 
 	public static void makeMove(String[][] gameBoard, int move, String player) {
@@ -150,9 +177,48 @@ public class Filip {
 			gameBoard[4][4] = symbol;
 			break;
 		default:
-			System.out.print("That is not a valid move. ");
+			System.out.print("Ogiltigt drag ");
 			System.out.println();
 
 		}
+
+	}
+
+	public static String checkWinner() {
+
+		List topRow = Arrays.asList(1, 2, 3);
+		List middleRow = Arrays.asList(4, 5, 6);
+		List bottomRow = Arrays.asList(7, 8, 9);
+		List leftColumn = Arrays.asList(1, 4, 7);
+		List middleColumn = Arrays.asList(2, 5, 8);
+		List rightColumn = Arrays.asList(3, 6, 9);
+		List diagonal1 = Arrays.asList(1, 5, 9);
+		List diagonal2 = Arrays.asList(7, 5, 3);
+
+		List<List> winningConditions = new ArrayList<List>();
+		winningConditions.add(topRow);
+		winningConditions.add(middleRow);
+		winningConditions.add(bottomRow);
+		winningConditions.add(leftColumn);
+		winningConditions.add(middleColumn);
+		winningConditions.add(rightColumn);
+		winningConditions.add(diagonal1);
+		winningConditions.add(diagonal2);
+
+		for (List list : winningConditions) {
+			if (playerOnePositions.containsAll(list)) {
+				return "Spelare 1 har vunnit. Grattis! \n";
+			} else if (playerTwoPositions.containsAll(list)) {
+				return "Spelare 2 har vunnit. Grattis! \n";
+			} else if (computerPositions.containsAll(list)) {
+				return "Datorn har vunnit. Lycka till nästa gång! \n";
+			}
+		}
+		if (playerOnePositions.size() + playerTwoPositions.size() == 9
+				|| playerOnePositions.size() + computerPositions.size() == 9) {
+			return "Oavgjort! \n";
+		}
+
+		return "";
 	}
 }
