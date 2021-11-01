@@ -6,17 +6,17 @@ import java.util.Scanner;
 
 public class Game {
 
-	static ArrayList<Integer> playerOnePositions = new ArrayList<Integer>();
+	static ArrayList<Integer> playerOnePositions = new ArrayList<Integer>(); //Listor som sparar spelarens positioner.
 	static ArrayList<Integer> playerTwoPositions = new ArrayList<Integer>();
 	static ArrayList<Integer> computerPositions = new ArrayList<Integer>();
 
-	public static void main(String[] args) {
+	public static void main(String[] args) { 
 		
 		runGame();
 		
 	}
 
-	public static void printGameBoard(String[][] gameBoard) {
+	public static void printGameBoard(String[][] gameBoard) {  //Skriver ut spelbrädet.
 		System.out.println();
 		for (String[] row : gameBoard) {
 			for (String column : row) {
@@ -27,7 +27,7 @@ public class Game {
 		System.out.println();
 	}
 
-	public static void runGame() {
+	public static void runGame() {   //Kör programmet och visar valmöjligheter för användaren.
 		int menuChoice;
 		do {
 			System.out.println("Välj (1-3): ");
@@ -36,11 +36,10 @@ public class Game {
 			menuChoice = scan.nextInt();
 			switch (menuChoice) {
 			case 1: 
-				singlePlayer();
+				singlePlayer(); //Användare vs dator.
 				break;
-
 			case 2: 
-				multiPlayer();
+				multiPlayer(); //Användare vs användare.
 				break;
 			case 3:
 				System.out.println("Spelet avslutas. . .");
@@ -52,13 +51,13 @@ public class Game {
 		} while (menuChoice != 3);
 	}
 
-	public static void singlePlayer() {
+	public static void singlePlayer() { 
 		String[][] gameBoard = { { "     ", "|", "     ", "|", "     " }, { "-----", "+", "-----", "+", "-----" },
 				{ "     ", "|", "     ", "|", "     " }, { "-----", "+", "-----", "+", "-----" },
 				{ "     ", "|", "     ", "|", "     " } };
 		printGameBoard(gameBoard);
 		while (true) {
-			String result = checkWinner();
+			String result = checkResult();
 			Scanner sc = new Scanner(System.in);
 			System.out.print("Placera spelbricka (1-9): ");
 			int playerPos = sc.nextInt();// Spelare 1 val
@@ -67,7 +66,7 @@ public class Game {
 				playerPos = sc.nextInt();
 			}
 			makeMove(gameBoard, playerPos, "Player1");
-			result = checkWinner();
+			result = checkResult();
 			if (result.length() > 0) {
 				printGameBoard(gameBoard);
 				System.out.println(result);
@@ -86,7 +85,7 @@ public class Game {
 				e.printStackTrace();
 			}
 			makeMove(gameBoard, cpuPos, "Computer");
-			result = checkWinner();
+			result = checkResult();
 			if (result.length() > 0) {
 				printGameBoard(gameBoard);
 				System.out.println(result);
@@ -102,7 +101,7 @@ public class Game {
 				{ "     ", "|", "     ", "|", "     " } };
 		printGameBoard(gameBoard);
 		while (true) {
-			String result = checkWinner();
+			String result = checkResult();
 			Scanner sc = new Scanner(System.in);
 			System.out.print("Spelare 1, placera spelbricka (1-9): ");
 			int playerPos = sc.nextInt();// Spelare 1 val
@@ -111,7 +110,7 @@ public class Game {
 				playerPos = sc.nextInt();
 			}
 			makeMove(gameBoard, playerPos, "Player1");
-			result = checkWinner();
+			result = checkResult();
 			if (result.length() > 0) {
 				printGameBoard(gameBoard);
 				System.out.println(result);
@@ -125,7 +124,7 @@ public class Game {
 				playerTwoPos = sc.nextInt();
 			}
 			makeMove(gameBoard, playerTwoPos, "Player2");
-			result = checkWinner();
+			result = checkResult();
 			if (result.length() > 0) {
 				printGameBoard(gameBoard);
 				System.out.println(result);
@@ -135,7 +134,7 @@ public class Game {
 		}
 	}
 
-	public static void makeMove(String[][] gameBoard, int move, String player) {
+	public static void makeMove(String[][] gameBoard, int move, String player) { //Gör drag och sparar till lista.
 
 		String symbol = "";
 		if (player.equals("Player1")) {
@@ -149,7 +148,7 @@ public class Game {
 			computerPositions.add(move);
 		}
 
-		switch (move) {
+		switch (move) {	   //Placera X eller 0 på vald position.
 		case 1:
 			gameBoard[0][0] = symbol;
 			break;
@@ -185,8 +184,8 @@ public class Game {
 
 	}
 
-	public static String checkWinner() {
-
+	public static String checkResult() { //Kollar och returnerar resultat.
+ 
 		List topRow = Arrays.asList(1, 2, 3);
 		List middleRow = Arrays.asList(4, 5, 6);
 		List bottomRow = Arrays.asList(7, 8, 9);
@@ -196,7 +195,7 @@ public class Game {
 		List diagonal1 = Arrays.asList(1, 5, 9);
 		List diagonal2 = Arrays.asList(7, 5, 3);
 
-		List<List> winningConditions = new ArrayList<List>();
+		List<List> winningConditions = new ArrayList<List>(); //Alternativ för vinnande villkor.
 		winningConditions.add(topRow);
 		winningConditions.add(middleRow);
 		winningConditions.add(bottomRow);
@@ -206,7 +205,7 @@ public class Game {
 		winningConditions.add(diagonal1);
 		winningConditions.add(diagonal2);
 
-		for (List list : winningConditions) {
+		for (List list : winningConditions) {   //Söker igenom winningConditions efter vinst.
 			if (playerOnePositions.containsAll(list)) {
 				return "Spelare 1 har vunnit. Grattis! \n";
 			} else if (playerTwoPositions.containsAll(list)) {
