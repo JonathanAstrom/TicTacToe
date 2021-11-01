@@ -11,9 +11,9 @@ public class Filip {
 	static ArrayList<Integer> playerOnePositions = new ArrayList<Integer>();
 	static ArrayList<Integer> playerTwoPositions = new ArrayList<Integer>();
 	static ArrayList<Integer> computerPositions = new ArrayList<Integer>();
-	static String[][] gameBoard = { { "     ", "|", "     ", "|", "     " }, { "-----", "+", "-----", "+", "-----" },
-			{ "     ", "|", "     ", "|", "     " }, { "-----", "+", "-----", "+", "-----" },
-			{ "     ", "|", "     ", "|", "     " } };
+//	static String[][] gameBoard = { { "     ", "|", "     ", "|", "     " }, { "-----", "+", "-----", "+", "-----" },
+//			{ "     ", "|", "     ", "|", "     " }, { "-----", "+", "-----", "+", "-----" },
+//			{ "     ", "|", "     ", "|", "     " } };
 
 	public static void main(String[] args) {
 		
@@ -58,6 +58,9 @@ public class Filip {
 	}
 
 	public static void singlePlayer() {
+		String[][] gameBoard = { { "     ", "|", "     ", "|", "     " }, { "-----", "+", "-----", "+", "-----" },
+				{ "     ", "|", "     ", "|", "     " }, { "-----", "+", "-----", "+", "-----" },
+				{ "     ", "|", "     ", "|", "     " } };
 		printGameBoard(gameBoard);
 		while (true) {
 			String result = checkWinner();
@@ -99,6 +102,9 @@ public class Filip {
 	}
 
 	public static void multiPlayer() {
+		String[][] gameBoard = { { "     ", "|", "     ", "|", "     " }, { "-----", "+", "-----", "+", "-----" },
+				{ "     ", "|", "     ", "|", "     " }, { "-----", "+", "-----", "+", "-----" },
+				{ "     ", "|", "     ", "|", "     " } };
 		printGameBoard(gameBoard);
 		while (true) {
 			String result = checkWinner();
