@@ -32,6 +32,7 @@ public class Game {
 		do {
 			System.out.println("Välj (1-3): ");
 			System.out.println("1. Spela mot dator \n2. Spela mot varandra \n3. Avsluta spelet");
+			@SuppressWarnings("resource")
 			Scanner scan = new Scanner(System.in);
 			menuChoice = scan.nextInt();
 			switch (menuChoice) {
@@ -57,13 +58,15 @@ public class Game {
 				{ "     ", "|", "     ", "|", "     " } };
 		printGameBoard(gameBoard);
 		while (true) {
-			String result = checkResult();
+			String result = checkResult();			
+			@SuppressWarnings("resource")
 			Scanner sc = new Scanner(System.in);
 			System.out.print("Placera spelbricka (1-9): ");
 			int playerPos = sc.nextInt();// Spelare 1 val
 			while (playerOnePositions.contains(playerPos) || computerPositions.contains(playerPos)) {
 				System.out.print("Du kan inte lägga på en annan spelares position. \nFörsök igen (1-9): ");
 				playerPos = sc.nextInt();
+				
 			}
 			makeMove(gameBoard, playerPos, "Player1");
 			result = checkResult();
@@ -92,7 +95,10 @@ public class Game {
 				break;
 			}
 			printGameBoard(gameBoard);
+			
 		}
+		playerOnePositions.clear();
+		computerPositions.clear();
 	}
 
 	public static void multiPlayer() {
@@ -102,6 +108,7 @@ public class Game {
 		printGameBoard(gameBoard);
 		while (true) {
 			String result = checkResult();
+			@SuppressWarnings("resource")
 			Scanner sc = new Scanner(System.in);
 			System.out.print("Spelare 1, placera spelbricka (1-9): ");
 			int playerPos = sc.nextInt();// Spelare 1 val
@@ -132,6 +139,8 @@ public class Game {
 			}
 			printGameBoard(gameBoard);
 		}
+		playerOnePositions.clear();
+		playerTwoPositions.clear();
 	}
 
 	public static void makeMove(String[][] gameBoard, int move, String player) { //Gör drag och sparar till lista.
@@ -186,15 +195,16 @@ public class Game {
 
 	public static String checkResult() { //Kollar och returnerar resultat.
  
-		List topRow = Arrays.asList(1, 2, 3);
-		List middleRow = Arrays.asList(4, 5, 6);
-		List bottomRow = Arrays.asList(7, 8, 9);
-		List leftColumn = Arrays.asList(1, 4, 7);
-		List middleColumn = Arrays.asList(2, 5, 8);
-		List rightColumn = Arrays.asList(3, 6, 9);
-		List diagonal1 = Arrays.asList(1, 5, 9);
-		List diagonal2 = Arrays.asList(7, 5, 3);
+		List<Integer> topRow = Arrays.asList(1, 2, 3);
+		List<Integer> middleRow = Arrays.asList(4, 5, 6);
+		List<Integer> bottomRow = Arrays.asList(7, 8, 9);
+		List<Integer> leftColumn = Arrays.asList(1, 4, 7);
+		List<Integer> middleColumn = Arrays.asList(2, 5, 8);
+		List<Integer> rightColumn = Arrays.asList(3, 6, 9);
+		List<Integer> diagonal1 = Arrays.asList(1, 5, 9);
+		List<Integer> diagonal2 = Arrays.asList(7, 5, 3);
 
+		@SuppressWarnings("rawtypes")
 		List<List> winningConditions = new ArrayList<List>(); //Alternativ för vinnande villkor.
 		winningConditions.add(topRow);
 		winningConditions.add(middleRow);
@@ -205,7 +215,7 @@ public class Game {
 		winningConditions.add(diagonal1);
 		winningConditions.add(diagonal2);
 
-		for (List list : winningConditions) {   //Söker igenom winningConditions efter vinst.
+		for (List<?> list : winningConditions) {   //Söker igenom winningConditions efter vinst.
 			if (playerOnePositions.containsAll(list)) {
 				return "Spelare 1 har vunnit. Grattis! \n";
 			} else if (playerTwoPositions.containsAll(list)) {
