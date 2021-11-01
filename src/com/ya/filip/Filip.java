@@ -11,9 +11,6 @@ public class Filip {
 	static ArrayList<Integer> playerOnePositions = new ArrayList<Integer>();
 	static ArrayList<Integer> playerTwoPositions = new ArrayList<Integer>();
 	static ArrayList<Integer> computerPositions = new ArrayList<Integer>();
-//	static String[][] gameBoard = { { "     ", "|", "     ", "|", "     " }, { "-----", "+", "-----", "+", "-----" },
-//			{ "     ", "|", "     ", "|", "     " }, { "-----", "+", "-----", "+", "-----" },
-//			{ "     ", "|", "     ", "|", "     " } };
 
 	public static void main(String[] args) {
 		
@@ -35,7 +32,7 @@ public class Filip {
 	public static void runGame() {
 		int menuChoice;
 		do {
-			System.out.println("Välj spelarläge(1-2): ");
+			System.out.println("Välj (1-3): ");
 			System.out.println("1. Spela mot dator \n2. Spela mot varandra \n3. Avsluta spelet");
 			Scanner scan = new Scanner(System.in);
 			menuChoice = scan.nextInt();

@@ -11,107 +11,9 @@ public class Game {
 	static ArrayList<Integer> computerPositions = new ArrayList<Integer>();
 
 	public static void main(String[] args) {
-		int menuChoice;
-		String[][] gameBoard = { { "     ", "|", "     ", "|", "     " }, { "-----", "+", "-----", "+", "-----" },
-				{ "     ", "|", "     ", "|", "     " }, { "-----", "+", "-----", "+", "-----" },
-				{ "     ", "|", "     ", "|", "     " } };
-
-		do {
-			System.out.println("Välj spelarläge(1-2): ");
-			System.out.println("1. Spela mot dator \n2. Spela mot varandra \n3. Avsluta spelet");
-			Scanner scan = new Scanner(System.in);
-			menuChoice = scan.nextInt();
-			switch (menuChoice) {
-			case 1: // Singleplayer
-				printGameBoard(gameBoard);
-
-				while (true) {
-					String result = checkWinner();
-					Scanner sc = new Scanner(System.in);
-					System.out.print("Placera spelbricka (1-9): ");
-					int playerPos = sc.nextInt();// Spelare 1 val
-					while (playerOnePositions.contains(playerPos) || computerPositions.contains(playerPos)) {
-						System.out.print("Du kan inte lägga på en annan spelares position. \nFörsök igen (1-9): ");
-						playerPos = sc.nextInt();
-					}
-					makeMove(gameBoard, playerPos, "Player1");
-					result = checkWinner();
-					if (result.length() > 0) {
-						printGameBoard(gameBoard);
-						System.out.println(result);
-						break;
-					}
-					printGameBoard(gameBoard);
-
-					Random rnd = new Random();
-					int cpuPos = rnd.nextInt(9) + 1;// Random val
-					while (playerOnePositions.contains(cpuPos) || computerPositions.contains(cpuPos)) {
-						cpuPos = rnd.nextInt(9) + 1;
-					}
-					try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-					makeMove(gameBoard, cpuPos, "Computer");
-					result = checkWinner();
-					if (result.length() > 0) {
-						printGameBoard(gameBoard);
-						System.out.println(result);
-						break;
-					}
-					printGameBoard(gameBoard);
-
-				}
-				break;
-
-			case 2: // Multiplayer
-				printGameBoard(gameBoard);
-
-				while (true) {
-					String result = checkWinner();
-					Scanner sc = new Scanner(System.in);
-					System.out.print("Spelare 1, placera spelbricka (1-9): ");
-					int playerPos = sc.nextInt();// Spelare 1 val
-					while (playerOnePositions.contains(playerPos) || playerTwoPositions.contains(playerPos)) {
-						System.out.print("Du kan inte lägga på en annan spelares position. \nFörsök igen (1-9): ");
-						playerPos = sc.nextInt();
-					}
-					makeMove(gameBoard, playerPos, "Player1");
-					result = checkWinner();
-					if (result.length() > 0) {
-						printGameBoard(gameBoard);
-						System.out.println(result);
-						break;
-					}
-					printGameBoard(gameBoard);
-
-					System.out.print("Spelare 2, placera spelbricka (1-9): ");
-					int playerTwoPos = sc.nextInt();// spelare 2 val
-					while (playerOnePositions.contains(playerTwoPos) || playerTwoPositions.contains(playerTwoPos)) {
-						System.out.print("Du kan inte lägga på en annan spelares position. \nFörsök igen (1-9): ");
-						playerTwoPos = sc.nextInt();
-					}
-					makeMove(gameBoard, playerTwoPos, "Player2");
-					result = checkWinner();
-					if (result.length() > 0) {
-						printGameBoard(gameBoard);
-						System.out.println(result);
-						break;
-					}
-					printGameBoard(gameBoard);
-
-				}
-				break;
-			case 3:
-				System.out.println("Spelet avslutas. . .");
-				break;
-			default:
-				System.out.println("Ogiltigt alternativ");
-				break;
-			}
-		} while (menuChoice != 3);
-
+		
+		runGame();
+		
 	}
 
 	public static void printGameBoard(String[][] gameBoard) {
@@ -124,9 +26,113 @@ public class Game {
 		}
 		System.out.println();
 	}
-	
-	public static void playerMode() {
-		
+
+	public static void runGame() {
+		int menuChoice;
+		do {
+			System.out.println("Välj (1-3): ");
+			System.out.println("1. Spela mot dator \n2. Spela mot varandra \n3. Avsluta spelet");
+			Scanner scan = new Scanner(System.in);
+			menuChoice = scan.nextInt();
+			switch (menuChoice) {
+			case 1: 
+				singlePlayer();
+				break;
+
+			case 2: 
+				multiPlayer();
+				break;
+			case 3:
+				System.out.println("Spelet avslutas. . .");
+				break;
+			default:
+				System.out.println("Ogiltigt alternativ");
+				break;
+			}
+		} while (menuChoice != 3);
+	}
+
+	public static void singlePlayer() {
+		String[][] gameBoard = { { "     ", "|", "     ", "|", "     " }, { "-----", "+", "-----", "+", "-----" },
+				{ "     ", "|", "     ", "|", "     " }, { "-----", "+", "-----", "+", "-----" },
+				{ "     ", "|", "     ", "|", "     " } };
+		printGameBoard(gameBoard);
+		while (true) {
+			String result = checkWinner();
+			Scanner sc = new Scanner(System.in);
+			System.out.print("Placera spelbricka (1-9): ");
+			int playerPos = sc.nextInt();// Spelare 1 val
+			while (playerOnePositions.contains(playerPos) || computerPositions.contains(playerPos)) {
+				System.out.print("Du kan inte lägga på en annan spelares position. \nFörsök igen (1-9): ");
+				playerPos = sc.nextInt();
+			}
+			makeMove(gameBoard, playerPos, "Player1");
+			result = checkWinner();
+			if (result.length() > 0) {
+				printGameBoard(gameBoard);
+				System.out.println(result);
+				break;
+			}
+			printGameBoard(gameBoard);
+
+			Random rnd = new Random();
+			int cpuPos = rnd.nextInt(9) + 1;// Random val
+			while (playerOnePositions.contains(cpuPos) || computerPositions.contains(cpuPos)) {
+				cpuPos = rnd.nextInt(9) + 1;
+			}
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			makeMove(gameBoard, cpuPos, "Computer");
+			result = checkWinner();
+			if (result.length() > 0) {
+				printGameBoard(gameBoard);
+				System.out.println(result);
+				break;
+			}
+			printGameBoard(gameBoard);
+		}
+	}
+
+	public static void multiPlayer() {
+		String[][] gameBoard = { { "     ", "|", "     ", "|", "     " }, { "-----", "+", "-----", "+", "-----" },
+				{ "     ", "|", "     ", "|", "     " }, { "-----", "+", "-----", "+", "-----" },
+				{ "     ", "|", "     ", "|", "     " } };
+		printGameBoard(gameBoard);
+		while (true) {
+			String result = checkWinner();
+			Scanner sc = new Scanner(System.in);
+			System.out.print("Spelare 1, placera spelbricka (1-9): ");
+			int playerPos = sc.nextInt();// Spelare 1 val
+			while (playerOnePositions.contains(playerPos) || playerTwoPositions.contains(playerPos)) {
+				System.out.print("Du kan inte lägga på en annan spelares position. \nFörsök igen (1-9): ");
+				playerPos = sc.nextInt();
+			}
+			makeMove(gameBoard, playerPos, "Player1");
+			result = checkWinner();
+			if (result.length() > 0) {
+				printGameBoard(gameBoard);
+				System.out.println(result);
+				break;
+			}
+			printGameBoard(gameBoard);
+			System.out.print("Spelare 2, placera spelbricka (1-9): ");
+			int playerTwoPos = sc.nextInt();// spelare 2 val
+			while (playerOnePositions.contains(playerTwoPos) || playerTwoPositions.contains(playerTwoPos)) {
+				System.out.print("Du kan inte lägga på en annan spelares position. \nFörsök igen (1-9): ");
+				playerTwoPos = sc.nextInt();
+			}
+			makeMove(gameBoard, playerTwoPos, "Player2");
+			result = checkWinner();
+			if (result.length() > 0) {
+				printGameBoard(gameBoard);
+				System.out.println(result);
+				break;
+			}
+			printGameBoard(gameBoard);
+		}
 	}
 
 	public static void makeMove(String[][] gameBoard, int move, String player) {
