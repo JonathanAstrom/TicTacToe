@@ -5,5 +5,5 @@
 gitrepo:
 https://github.com/JonathanAstrom/TicTacToe.git
 
-Tjena!
-goddagens
+Tre i rad av Filip, Jonathan & Pernilla.
+Välj att spela mot datorn eller mot en annan spelare.
